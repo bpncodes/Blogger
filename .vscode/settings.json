@@ -1,0 +1,7 @@
+{
+    "ruby.format": true,
+    "vim.handleKeys": {
+        "<C-w>": false
+    }
+
+}

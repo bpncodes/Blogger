@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Hi <%= @user.username %></h1>
+    <h2>
+      A new comment has been added to your post .
+    </h2>
+    <h3>Commented by : <%=@comment.user.username%></h3>
+    <h3>Commented says :  <%=@comment.body%> </h3>
+
+  </body>
+</html>

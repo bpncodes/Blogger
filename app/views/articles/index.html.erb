@@ -1,0 +1,56 @@
+<% content_for :title, "Articles | Home" %>
+
+<main class="container">
+<%if current_user%>
+<div class="p-4 p-md-5 mb-4 text-white rounded bg-dark">
+    <div class="col-md-6 px-0">
+      <h1 class="display-4 fst-italic">Hi there, <%=current_user.username%></h1>
+      <p class="lead my-3">You can create a new post right now !</p>
+      <p class="lead mb-0"><a class="text-white fw-bold">
+      <%= link_to 'Create New Article', new_article_path,class:'btn btn-info' %>
+      </a></p>
+    </div>
+  </div>
+<%end %>
+
+<div id='articles'>
+    <% @articles.each do |article| %>
+      <div class="row g-0 border rounded overflow-show flex-md-row mb-4 shadow-sm position-relative">
+        <div class="col p-4 d-flex flex-column position-static">
+          <strong class="d-inline-block mb-2 text-primary">by: <%= article.article_username %></strong>
+
+          <%= link_to article,class:"text-secondary" do %>
+          <h3 class="mb-0"><%=article.title%>
+          <%end%>
+
+          <span class='h6'>
+          <%if can? :edit, article%><%= link_to 'Edit Article', edit_article_path(article),class:'d-inline-block btn btn-secondary' %><%end%>
+          <%if can? :destroy, article%><%= link_to 'Destroy Article', article, method: :delete,data: { confirm: 'Are you sure?' },class:'btn btn-danger' %><%end%>
+          </span>
+          </h3>
+          <div class="mb-1 text-muted"><%=article.updated_at.strftime("%b %d")%></div>
+          <p class="card-text mb-auto"> <%=article.content%></p>
+          <%# <%= link_to 'Continue reading', article %> 
+          <hr/>
+
+
+          <h3 class="font-italic my-1">Comments</h3>
+              <%comments = article.comments.to_a%>
+              <% comments.each_with_index do |comment,index|%>
+              <%=break unless index<5%>
+              <div style="">
+              <strong><%=comment.name%></strong>
+              <p><%=comment.body%></p>
+              </div>
+              <%end%>
+        </div>
+        <%if article.image%>
+        <div class="col-auto d-none d-lg-block">
+         <%= image_tag article.article_image_picture_url,class: 'img-fluid' if article.article_image_picture_url %>
+        </div>
+        <%end%>
+      </div>
+  <%end%>
+</div>
+<%= paginate @articles %>
+</main>

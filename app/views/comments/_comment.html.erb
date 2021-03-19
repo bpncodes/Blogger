@@ -1,0 +1,13 @@
+<div class="card w-75 my-3" id="comment-id-<%=comment.id.to_s%>">
+  <div class="card-body">
+    <h5 class="card-title"><%= comment.name %></h5>
+    <p class="card-text"><%= comment.body %></p>
+    <p class="card-text">commented by : <%= comment.comment_username%></p>
+<%if current_user%>
+<%if comment.user.id==current_user.id or current_user.admin_role? or current_user.editor_role?%>
+<%= link_to 'delete',[comment.article,comment],method: :delete,class:'btn btn-info'%>
+<%= link_to 'Edit', edit_article_comment_path(comment.article, comment),class:'btn btn-info'%>
+<%end%>
+<%end%>
+  </div>
+</div>

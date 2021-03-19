@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= yield(:title) %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+      <%= action_cable_meta_tag %>
+
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body class="fluid-container px-3">
+  <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 bg-white border-bottom shadow-sm">
+  <%if current_user%>
+  <h5 class="my-0 mr-md-auto font-weight-normal">Welcome, <%=current_user.username%></h5>
+  <%else%>
+  <h5 class="my-0 mr-md-auto font-weight-normal">Welcome, Guest user</h5>
+  <%end%>
+  <nav class="my-2 my-md-0 mr-md-3">
+    <a class="p-2 text-dark" ><%=link_to "Home", root_path,class:'text-info'%></a>
+    <%if current_user%>
+    <a class="p-2 text-dark" ><%=link_to "Signout", destroy_user_session_path,method: :delete,class:'text-info'%></a>
+    <a class="p-2 text-dark" ><%=link_to "Edit Profile", edit_user_registration_path,class:'text-info'%></a>
+    <a class="p-2 text-dark" ><%=link_to "Export Articles", all_path,class:'text-info'%></a>
+    <a class="p-2 text-dark" ><%=link_to "Import Articles", import_path,class:'text-info'%></a>
+    <a class="p-2 text-dark" ><%=link_to "View jobs", delayed_job_path,class:'text-info'%></a>
+
+    <%if current_user.avatar.attached? %>
+     <%= image_tag current_user.avatar.variant(resize: "100x100>"),class:'avatar text-info ml-3'%>
+    <%end%>
+
+    <%else%>
+    <a class="p-2 text-dark" ><%=link_to "Login", new_user_session_path,class:'text-info'	%></a>
+    <a class="p-2 text-dark"><%=link_to "Signup", new_user_registration_path,class:'text-info'%></a>
+    <%end%>
+  </nav>
+  
+</div>
+<%
+=begin%>
+  <ul style="list-style:none">
+  <%if current_user%>
+  <li style="display:inline">
+  <h3 style="display:inline">Welcome, <%=current_user.username%></h3>
+  </li>
+  <li style="display:inline">
+  <%=link_to "Home", root_path%>
+  </li>
+  <li style="display:inline">
+    <%=link_to "Signout", destroy_user_session_path,method: :delete%>
+  </li>
+  <li style="display:inline">
+    <%=link_to "Edit Profile", edit_user_registration_path%>
+  </li>
+  <%if current_user.image %>
+  <li style = "display:inline">
+  <%= image_tag current_user.image.picture.url if current_user.image.picture.url %>
+  </li>
+    <%end%>
+
+<%# <%binding.pry%>
+  <%if current_user.avatar.attached? %>
+  <li style = "display:inline">
+ <%= image_tag current_user.avatar.variant(resize: "100x100>") %>
+  </li>
+    <%end%>
+
+  <%else%>
+  <li style="display:inline">
+    <%=link_to "Login", new_user_session_path	%>
+  </li>
+
+  <li style="display:inline">
+    <%=link_to "Signup", new_user_registration_path%>
+  </li>
+  </ul>
+
+<%end%>
+<%
+=end%>
+<%if notice%>
+<div class="alert alert-warning alert-dismissible fade show my-3" role="alert">
+  <%= notice %>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<%end%>
+
+<%if alert%>
+<div class="alert alert-warning alert-dismissible fade show my-3" role="alert">
+  <%= alert %>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<%end%>
+  <%# <p class="notice"><%= notice %></p> 
+  <%# <p class="alert"><%= alert %></p> 
+  <%= yield %>
+  <footer class="blog-footer ">
+  <p>Blog built by <a href="#">Bipin Karki</a>.</p>
+  <p>
+    <a href="#">Back to top</a>
+  </p>
+</footer>
+  </body>
+</html>

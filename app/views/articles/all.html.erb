@@ -1,0 +1,45 @@
+<%#BY default remote true%>
+<%
+=begin%>
+<%= form_with url: "/export.js", method: :post do |form| %> use this to goto export.js.erb
+<%
+=end%>
+
+<%= form_with url: "/export", method: :post do |form| %>
+  <table class="table">
+  <caption>List of articles</caption>
+  <thead>
+    <tr>
+      <th scope="col">S.N</th>
+      <th scope="col">Name of author</th>
+      <th scope="col">Title of article</th>
+      <th scope="col">Content</th>
+      <th scope="col">Export?</th>
+    
+    </tr>
+  </thead>
+  <tbody>
+   <% @articles.each_with_index do |article,index| %>
+    <tr>
+      <th scope="row"><%=index%></th>
+      <td><%= article.article_username %></td>
+      <td><%=article.title%></td>
+      <td><%=article.content%></td>
+      <td>
+      <%= form.check_box(article.id) %>
+      <%= form.label(article.id, "Yes") %>
+      </td>
+   </td>
+    </tr>
+    <%end%>
+  </tbody>
+</table>
+
+<div>
+    <%= form.label "Export All"%>
+    <%= form.check_box :export_all%>
+</div>
+
+  <%= form.submit "Click to Export" ,class: 'btn btn-primary py-3 my-3'%>
+<% end %>
+

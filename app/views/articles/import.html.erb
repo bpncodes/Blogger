@@ -1,0 +1,5 @@
+<%= form_with url: "/generate",multipart: true, local: true, method: :post,class:'form-signin' do |form| %>
+  <p class="text-info">Please choose a csv with non empty values for article title and content otherwise articles wont be added</p>
+  <%= form.file_field :data, required: true ,class: 'form-control-file my-3'%>
+  <%= form.submit "Import",class:'btn btn-info' %>
+<% end %>

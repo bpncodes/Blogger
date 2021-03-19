@@ -1,0 +1,33 @@
+      <div class="row g-0 border rounded overflow-show flex-md-row mb-4 shadow-sm position-relative">
+        <div class="col p-4 d-flex flex-column position-static">
+          <strong class="d-inline-block mb-2 text-primary">by: <%= article.article_username %></strong>
+
+          <%= link_to article,class:"text-secondary" do %>
+          <h3 class="mb-0"><%=article.title%>
+          <%end%>
+
+          <span class='h6'>
+          </span>
+          </h3>
+          <div class="mb-1 text-muted"><%=article.updated_at.strftime("%b %d")%></div>
+          <p class="card-text mb-auto"> <%=article.content%></p>
+          <%# <%= link_to 'Continue reading', article %> 
+          <hr/>
+
+
+          <h3 class="font-italic my-1">Comments</h3>
+              <%comments = article.comments.to_a%>
+              <% comments.each_with_index do |comment,index|%>
+              <%=break unless index<5%>
+              <div style="">
+              <strong><%=comment.name%></strong>
+              <p><%=comment.body%></p>
+              </div>
+              <%end%>
+        </div>
+        <%if article.image%>
+        <div class="col-auto d-none d-lg-block">
+         <%= image_tag article.article_image_picture_url,class: 'img-fluid' if article.article_image_picture_url %>
+        </div>
+        <%end%>
+      </div>
